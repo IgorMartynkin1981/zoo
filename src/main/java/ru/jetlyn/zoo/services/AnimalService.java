@@ -10,7 +10,7 @@ import java.util.List;
  * @getAllAnimals - получить всех животных
  * @getAnimal - получить животное по его Id
  * @saveAnimal - создать/сохранить животное
- * @updateAnimal - обновить данные животного
+ * @updateAnimal - обновить данные животного, нужно удалить нет в задании
  * @deleteAnimalById - удалить животное по его Id
  * @deleteAnimalByIds - удалить список животных по их Id
  * @deleteAllAnimal - удалить всех животных из хранилища
@@ -24,6 +24,7 @@ public interface AnimalService {
 
     Animal saveAnimal(Animal animal);
 
+    @Deprecated(since = "Next iteration")
     Animal updateAnimal(Animal animal);
 
     void deleteAnimalById(long id);

@@ -1,4 +1,4 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.entity.enums;
 
 /**
  * Type Тип (овощ/фрукт/мясо/жидкость)

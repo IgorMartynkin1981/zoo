@@ -2,6 +2,11 @@ package ru.jetlyn.zoo.services;
 
 import org.junit.jupiter.api.Test;
 import ru.jetlyn.zoo.entity.*;
+import ru.jetlyn.zoo.entity.enums.Measure;
+import ru.jetlyn.zoo.entity.enums.Species;
+import ru.jetlyn.zoo.entity.enums.TypeOfProduct;
+import ru.jetlyn.zoo.services.impl.AnimalServiceImpl;
+import ru.jetlyn.zoo.services.impl.FoodServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

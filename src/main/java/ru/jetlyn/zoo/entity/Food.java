@@ -1,6 +1,11 @@
 package ru.jetlyn.zoo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import ru.jetlyn.zoo.entity.enums.Measure;
+import ru.jetlyn.zoo.entity.enums.TypeOfProduct;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,6 +42,9 @@ public class Food {
     @Column(name = "type_of_product", nullable = false)
     private TypeOfProduct typeOfProduct;
 
-    @OneToMany(mappedBy = "food")
-    List<Diet> ratings;
+    @Transient
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Diet> dietList;
 }

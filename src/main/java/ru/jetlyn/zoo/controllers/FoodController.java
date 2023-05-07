@@ -52,7 +52,7 @@ public class FoodController {
         return new ResponseEntity<>("Foods was deleted!", HttpStatus.OK);
     }
 
-    @DeleteMapping("/foods/all")
+    @DeleteMapping("/foods")
     public ResponseEntity<String> deleteAllAnimal() {
         foodService.deleteAllFood();
         return new ResponseEntity<>("All foods was deleted!", HttpStatus.OK);
