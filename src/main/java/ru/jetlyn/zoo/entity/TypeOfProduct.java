@@ -8,7 +8,7 @@ package ru.jetlyn.zoo.entity;
 public enum TypeOfProduct {
     VEGETABLE("овощ"),
     FRUIT("фрукт"),
-    meatMEAT("мясо"),
+    MEAT("мясо"),
     LIQUID("жидкость");
 
     private final String translateIntoRus;
