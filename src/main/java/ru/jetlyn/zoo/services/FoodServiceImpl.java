@@ -2,34 +2,69 @@ package ru.jetlyn.zoo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.data.AnimalRepository;
 import ru.jetlyn.zoo.data.FoodRepository;
-import ru.jetlyn.zoo.entity.Animal;
 import ru.jetlyn.zoo.entity.Food;
+import ru.jetlyn.zoo.exception.DataNotFound;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
  * Сервис по работе с методами для сущностей Food
- * @getAllFoods получить из хранилища всех животных
- * @saveFood сохранить в хранилище животное
+ *
+ * @getAllFoods - получить все продукты
+ * @getFood - получить продукт по его Id
+ * @saveFood - создать/сохранить продукт
+ * @updateFood - обновить данные продукта
+ * @deleteFoodById - удалить продукт по его Id
+ * @deleteFoodByIds - удалить список продуктов по их Id
+ * @deleteAllFood - удалить все продукты из хранилища
  */
 
 @Service
-public class FoodServiceImpl {
+public class FoodServiceImpl implements FoodService {
 
-    private FoodRepository foodRepository;
+    private final FoodRepository foodRepository;
 
     @Autowired
     public FoodServiceImpl(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }
 
-    public List<Food> getAllFoods () {
+    @Override
+    public List<Food> getAllFoods() {
         return foodRepository.findAll();
     }
 
-    public Food saveFood(Food food) {
+    @Override
+    public Food getFood(long id) {
+        return foodRepository.findById(id)
+                .orElseThrow(() -> new DataNotFound("Food with id %d was not found in the database"));
+    }
+
+    @Override
+    public Food saveFood(@Valid Food food) {
         return foodRepository.save(food);
+    }
+
+    @Override
+    public Food updateFood(@Valid Food food) {
+        return null;
+    }
+
+    @Override
+    public void deleteFoodById(long id) {
+        getFood(id);
+        foodRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteFoodByIds(List<Long> foodIds) {
+        foodRepository.deleteAllById(foodIds);
+    }
+
+    @Override
+    public void deleteAllFood() {
+        foodRepository.deleteAll();
     }
 }

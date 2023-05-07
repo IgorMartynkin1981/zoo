@@ -4,6 +4,18 @@ import ru.jetlyn.zoo.entity.Animal;
 
 import java.util.List;
 
+/**
+ * Контракт для сущности Animal
+ *
+ * @getAllAnimals - получить всех животных
+ * @getAnimal - получить животное по его Id
+ * @saveAnimal - создать/сохранить животное
+ * @updateAnimal - обновить данные животного
+ * @deleteAnimalById - удалить животное по его Id
+ * @deleteAnimalByIds - удалить список животных по их Id
+ * @deleteAllAnimal - удалить всех животных из хранилища
+ */
+
 public interface AnimalService {
 
     List<Animal> getAllAnimals();

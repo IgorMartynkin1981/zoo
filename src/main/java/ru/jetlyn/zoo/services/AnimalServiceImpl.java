@@ -6,19 +6,25 @@ import ru.jetlyn.zoo.data.AnimalRepository;
 import ru.jetlyn.zoo.entity.Animal;
 import ru.jetlyn.zoo.exception.DataNotFound;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
  * Сервис по работе с методами для сущностей Animal
  *
- * @getAllAnimals получить из хранилища всех животных
- * @saveAnimal сохранить в хранилище животное
+ * @getAllAnimals - получить всех животных
+ * @getAnimal - получить животное по его Id
+ * @saveAnimal - создать/сохранить животное
+ * @updateAnimal - обновить данные животного
+ * @deleteAnimalById - удалить животное по его Id
+ * @deleteAnimalByIds - удалить список животных по их Id
+ * @deleteAllAnimal - удалить всех животных из хранилища
  */
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
-    private AnimalRepository animalRepository;
+    private final AnimalRepository animalRepository;
 
     @Autowired
     public AnimalServiceImpl(AnimalRepository animalRepository) {
@@ -32,17 +38,17 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public Animal getAnimal(long id) {
-        return animalRepository.findById(id).orElseThrow(() -> new DataNotFound(
-                String.format("Animal with id %d was not found in the database")));
+        return animalRepository.findById(id)
+                .orElseThrow(() -> new DataNotFound("Animal with id %d was not found in the database"));
     }
 
     @Override
-    public Animal saveAnimal(Animal animal) {
+    public Animal saveAnimal(@Valid Animal animal) {
         return animalRepository.save(animal);
     }
 
     @Override
-    public Animal updateAnimal(Animal animal) {
+    public Animal updateAnimal(@Valid Animal animal) {
         return animalRepository.save(changeParamAnimal(animal));
     }
 

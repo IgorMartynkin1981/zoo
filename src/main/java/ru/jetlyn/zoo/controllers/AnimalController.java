@@ -10,10 +10,10 @@ import ru.jetlyn.zoo.services.AnimalService;
 import java.util.List;
 
 @RestController
-@RequestMapping(path ="/zoo")
+@RequestMapping(path = "/zoo")
 public class AnimalController {
 
-    AnimalService animalService;
+    private final AnimalService animalService;
 
     @Autowired
     public AnimalController(AnimalService animalService) {
@@ -52,7 +52,7 @@ public class AnimalController {
         return new ResponseEntity<>("Animals was deleted!", HttpStatus.OK);
     }
 
-    @DeleteMapping("/animals/group")
+    @DeleteMapping("/animals/all")
     public ResponseEntity<String> deleteAllAnimal() {
         animalService.deleteAllAnimal();
         return new ResponseEntity<>("All animals was deleted!", HttpStatus.OK);
