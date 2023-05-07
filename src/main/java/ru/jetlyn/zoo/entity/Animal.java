@@ -37,4 +37,5 @@ public class Animal {
 
     @OneToMany(mappedBy = "animal")
     List<Diet> ratings;
+
 }

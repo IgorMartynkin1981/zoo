@@ -21,31 +21,40 @@ public class AnimalController {
     }
 
     @GetMapping(value = "/animals")
-    public ResponseEntity<List<Animal>> getAllAnimals() {
-        List<Animal> animal = animalService.getAllAnimals();
-        return animal != null && !animal.isEmpty()
-                ? new ResponseEntity<>(animal, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public List<Animal> getAllAnimals() {
+        return animalService.getAllAnimals();
     }
 
     @GetMapping(value = "/animals/{id}")
-    public ResponseEntity<Animal> getAnimal(@PathVariable long id) {
-        Animal animal = animalService.getAnimal(id);
-        return animal != null
-                ? new ResponseEntity<>(animal, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Animal getAnimal(@PathVariable long id) {
+        return animalService.getAnimal(id);
     }
 
-    @PostMapping(value = "zoo/animals")
-    public Animal create(@RequestBody Animal animal) {
-        //animalService.saveAnimal(animal);
+    @PostMapping(value = "/animals")
+    public Animal createAnimal(@RequestBody Animal animal) {
         return animalService.saveAnimal(animal);
-//                ? new ResponseEntity<>(create, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @PutMapping(value = "/animals/{id}")
-    public Animal update(@RequestBody Animal animal) {
+    @PutMapping(value = "/animals")
+    public Animal updateAnimal(@RequestBody Animal animal) {
         return animalService.updateAnimal(animal);
+    }
+
+    @DeleteMapping("/animals/{id}")
+    public ResponseEntity<String> deleteAnimalById(@PathVariable Long id) {
+        animalService.deleteAnimalById(id);
+        return new ResponseEntity<>(String.format("Animal with ID: %s was deleted!", id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/animals/group")
+    public ResponseEntity<String> deleteAnimalByIds(@RequestBody List<Long> animalIds) {
+        animalService.deleteAnimalByIds(animalIds);
+        return new ResponseEntity<>("Animals was deleted!", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/animals/group")
+    public ResponseEntity<String> deleteAllAnimal() {
+        animalService.deleteAllAnimal();
+        return new ResponseEntity<>("All animals was deleted!", HttpStatus.OK);
     }
 }
