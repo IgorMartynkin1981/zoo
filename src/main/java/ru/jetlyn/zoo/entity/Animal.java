@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Сущность Животное
@@ -33,9 +35,6 @@ public class Animal {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean predator;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "animals_foods",
-            joinColumns = {@JoinColumn(name = "animal_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "food_id", referencedColumnName = "id")})
-    private Collection<Food> roles;
+    @OneToMany(mappedBy = "animal")
+    List<Diet> ratings;
 }

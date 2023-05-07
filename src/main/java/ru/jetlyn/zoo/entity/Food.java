@@ -3,6 +3,7 @@ package ru.jetlyn.zoo.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Сущность Продукты
@@ -35,4 +36,7 @@ public class Food {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_product", nullable = false)
     private TypeOfProduct typeOfProduct;
+
+    @OneToMany(mappedBy = "food")
+    List<Diet> ratings;
 }
