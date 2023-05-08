@@ -2,15 +2,12 @@ package ru.jetlyn.zoo.animal.dto;
 
 import ru.jetlyn.zoo.diet.Diet;
 
+/**
+ * Маппер для сущности Animal
+ * приводит форму Diet из базы в форму AnimalFoodNorm
+ */
+
 public class AnimalMapper {
-
-    public static AnimalInfo toAnimalInfo(Diet diet) {
-        AnimalInfo animalInfo = new AnimalInfo();
-        animalInfo.setName(diet.getAnimal().getName());
-        animalInfo.setSpecies(diet.getAnimal().getSpecies());
-
-        return animalInfo;
-    }
 
     public static AnimalFoodNorm toAnimalFoodNorm(Diet diet) {
         AnimalFoodNorm animalFoodNorm = new AnimalFoodNorm();

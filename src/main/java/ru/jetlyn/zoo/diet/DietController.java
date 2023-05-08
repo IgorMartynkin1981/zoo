@@ -24,12 +24,11 @@ public class DietController {
     @ResponseBody
     public Collection<AnimalInfo> getAll(@RequestParam(name = "species", required = false) Species species,
                                          @RequestParam(name = "predator", required = false) String predator,
-                                         @RequestParam(name = "typeOfProduct", required = false) TypeOfProduct typeOfProduct,
+                                         @RequestParam(name = "typeOfProduct", required = false)
+                                             TypeOfProduct typeOfProduct,
                                          @RequestParam(name = "name", required = false) String name,
-                                         @RequestParam(name = "from",
-                                                 defaultValue = "0") Integer from,
-                                         @RequestParam(name = "size",
-                                                 defaultValue = "20") Integer size) {
+                                         @RequestParam(name = "from", defaultValue = "0") Integer from,
+                                         @RequestParam(name = "size", defaultValue = "20") Integer size) {
 
         return dietService.getAllDietsAnimal(species, predator, typeOfProduct, name, from, size);
     }

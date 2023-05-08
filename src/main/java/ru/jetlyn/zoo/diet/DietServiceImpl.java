@@ -2,23 +2,20 @@ package ru.jetlyn.zoo.diet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.diet.DietRepository;
-import ru.jetlyn.zoo.diet.Diet;
-import ru.jetlyn.zoo.diet.DietId;
 import ru.jetlyn.zoo.animal.dto.AnimalFoodNorm;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 import ru.jetlyn.zoo.animal.dto.AnimalMapper;
 import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
 import ru.jetlyn.zoo.exception.DataNotFound;
-import ru.jetlyn.zoo.diet.DietService;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -56,10 +53,13 @@ public class DietServiceImpl implements DietService {
 
         if (species != null) return getDietsAnimal(dietRepository.findDietByAnimal_Species(species, pageRequest));
         if (predator != null) {
-            if (predator.equals("true")) return getDietsAnimal(dietRepository.findDietByAnimal_Predator(true, pageRequest));
-            if (predator.equals("false")) return getDietsAnimal(dietRepository.findDietByAnimal_Predator(false, pageRequest));
+            if (predator.equals("true"))
+                return getDietsAnimal(dietRepository.findDietByAnimal_Predator(true, pageRequest));
+            if (predator.equals("false"))
+                return getDietsAnimal(dietRepository.findDietByAnimal_Predator(false, pageRequest));
         }
-        if (typeOfProduct != null) return getDietsAnimal(dietRepository.findDietByFood_TypeOfProduct(typeOfProduct, pageRequest));
+        if (typeOfProduct != null)
+            return getDietsAnimal(dietRepository.findDietByFood_TypeOfProduct(typeOfProduct, pageRequest));
         if (name != null) return getDietsAnimal(dietRepository.findDietByAnimal_Like(name));
 
         return getDietsAnimal(dietRepository.findAll(pageRequest).toList());
@@ -68,22 +68,6 @@ public class DietServiceImpl implements DietService {
     @Override
     public List<Diet> getAllDiet() {
         return dietRepository.findAll();
-    }
-
-
-    public Collection<AnimalInfo> getDietsAnimal(Collection<Diet> dietList) {
-        Set<AnimalInfo> animalInfoList = new HashSet<>();
-        for (Diet diet : dietList) {
-            AnimalInfo animalInfo = new AnimalInfo(diet.getAnimal().getName(), diet.getAnimal().getSpecies());
-           if (!animalInfoList.contains(animalInfo)) {
-               List<AnimalFoodNorm> animalFoodNormList = dietList.stream()
-                       .filter(x -> x.getAnimal().getName().equals(animalInfo.getName()))
-                       .map(AnimalMapper::toAnimalFoodNorm).collect(Collectors.toList());
-               animalInfo.setDietList(animalFoodNormList);
-               animalInfoList.add(animalInfo);
-           }
-        }
-        return animalInfoList;
     }
 
     @Override
@@ -131,5 +115,20 @@ public class DietServiceImpl implements DietService {
     public void deleteAll() {
         ResourceDatabasePopulator d = new ResourceDatabasePopulator();
         d.addScript(new ClassPathResource("scriptForDB.sql"));
+    }
+
+    public Collection<AnimalInfo> getDietsAnimal(Collection<Diet> dietList) {
+        Set<AnimalInfo> animalInfoList = new HashSet<>();
+        for (Diet diet : dietList) {
+            AnimalInfo animalInfo = new AnimalInfo(diet.getAnimal().getName(), diet.getAnimal().getSpecies());
+            if (!animalInfoList.contains(animalInfo)) {
+                List<AnimalFoodNorm> animalFoodNormList = dietList.stream()
+                        .filter(x -> x.getAnimal().getName().equals(animalInfo.getName()))
+                        .map(AnimalMapper::toAnimalFoodNorm).collect(Collectors.toList());
+                animalInfo.setDietList(animalFoodNormList);
+                animalInfoList.add(animalInfo);
+            }
+        }
+        return animalInfoList;
     }
 }

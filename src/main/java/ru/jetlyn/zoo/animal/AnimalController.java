@@ -7,6 +7,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Контроллер для сущности Animal
+ *
+ * @getAllAnimals - получить всех животных GET:{{baseUrl}}/zoo/animals
+ * @getAnimal - получить животное по его Id GET:{{baseUrl}}/zoo/animals/:id
+ * @saveAnimal - создать/сохранить животное POST:{{baseUrl}}/zoo/animals @RequestBody в формате JSON
+ * @deleteAnimalById - удалить животное по его Id DELETE:{{baseUrl}}/zoo/animals/:id
+ * @deleteAnimalByIds - удалить список животных по их Id DELETE:{{baseUrl}}/zoo/animals/group/:Ids
+ * @deleteAllAnimal - удалить всех животных из хранилища DELETE:{{baseUrl}}/zoo/animals
+ */
+
 @RestController
 @RequestMapping(path = "/zoo")
 public class AnimalController {
@@ -33,20 +44,15 @@ public class AnimalController {
         return animalService.saveAnimal(animal);
     }
 
-    @PutMapping(value = "/animals")
-    public Animal updateAnimal(@RequestBody Animal animal) {
-        return animalService.updateAnimal(animal);
-    }
-
     @DeleteMapping("/animals/{id}")
     public ResponseEntity<String> deleteAnimalById(@PathVariable Long id) {
         animalService.deleteAnimalById(id);
         return new ResponseEntity<>(String.format("Animal with ID: %s was deleted!", id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/animals/group")
-    public ResponseEntity<String> deleteAnimalByIds(@RequestBody List<Long> animalIds) {
-        animalService.deleteAnimalByIds(animalIds);
+    @DeleteMapping("/animals/group/{ids}")
+    public ResponseEntity<String> deleteAnimalByIds(@PathVariable List<Long> ids) {
+        animalService.deleteAnimalByIds(ids);
         return new ResponseEntity<>("Animals was deleted!", HttpStatus.OK);
     }
 

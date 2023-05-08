@@ -2,10 +2,7 @@ package ru.jetlyn.zoo.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.food.FoodRepository;
-import ru.jetlyn.zoo.food.Food;
 import ru.jetlyn.zoo.exception.DataNotFound;
-import ru.jetlyn.zoo.food.FoodService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -50,7 +47,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food updateFood(@Valid Food food) {
-        return null;
+        return foodRepository.save(food);
     }
 
     @Override
