@@ -1,4 +1,4 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.enums;
 
 /**
  * Species Вид (млекопитающее/птица)

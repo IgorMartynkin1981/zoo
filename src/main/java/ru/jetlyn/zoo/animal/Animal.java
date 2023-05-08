@@ -1,10 +1,13 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.animal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.enums.Species;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,7 +38,9 @@ public class Animal {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean predator;
 
-    @OneToMany(mappedBy = "animal")
-    List<Diet> ratings;
-
+    @Transient
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Diet> dietList;
 }

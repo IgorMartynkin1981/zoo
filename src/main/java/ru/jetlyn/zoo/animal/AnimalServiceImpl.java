@@ -1,10 +1,11 @@
-package ru.jetlyn.zoo.services;
+package ru.jetlyn.zoo.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.data.AnimalRepository;
-import ru.jetlyn.zoo.entity.Animal;
+import ru.jetlyn.zoo.animal.AnimalRepository;
+import ru.jetlyn.zoo.animal.Animal;
 import ru.jetlyn.zoo.exception.DataNotFound;
+import ru.jetlyn.zoo.animal.AnimalService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -76,9 +77,6 @@ public class AnimalServiceImpl implements AnimalService {
             animalFromStorage.setSpecies(animal.getSpecies());
 
         if (animal.isPredator() != animalFromStorage.isPredator()) animalFromStorage.setPredator(animal.isPredator());
-
-        if (animal.getRatings() != animalFromStorage.getRatings() || animal.getRatings().isEmpty())
-            animalFromStorage.setRatings(animal.getRatings());
 
         return animalFromStorage;
     }
