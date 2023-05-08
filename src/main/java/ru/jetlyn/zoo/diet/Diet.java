@@ -1,8 +1,10 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.diet;
 
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import ru.jetlyn.zoo.animal.Animal;
+import ru.jetlyn.zoo.food.Food;
 
 import javax.persistence.*;
 

@@ -1,13 +1,16 @@
-package ru.jetlyn.zoo.services;
+package ru.jetlyn.zoo.diet;
 
-import ru.jetlyn.zoo.entity.Diet;
-import ru.jetlyn.zoo.entity.DietId;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.diet.DietId;
+import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 
 import java.util.List;
 
 public interface DietService {
 
     List<Diet> getAllDiet();
+
+    List<AnimalInfo> getDietsAnimal();
 
     Diet getDietBy(DietId dietId);
 

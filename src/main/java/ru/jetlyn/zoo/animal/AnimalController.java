@@ -1,11 +1,9 @@
-package ru.jetlyn.zoo.controllers;
+package ru.jetlyn.zoo.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.jetlyn.zoo.entity.Animal;
-import ru.jetlyn.zoo.services.AnimalService;
 
 import java.util.List;
 

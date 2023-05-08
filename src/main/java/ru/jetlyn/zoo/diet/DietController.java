@@ -1,10 +1,8 @@
-package ru.jetlyn.zoo.controllers;
+package ru.jetlyn.zoo.diet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.jetlyn.zoo.entity.Diet;
-import ru.jetlyn.zoo.entity.DietId;
-import ru.jetlyn.zoo.services.DietService;
+import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 
 import java.util.List;
 
@@ -22,6 +20,11 @@ public class DietController {
     @GetMapping(value = "/diets")
     public List<Diet> getAllDiets() {
         return dietService.getAllDiet();
+    }
+
+    @GetMapping(value = "/diets/info")
+    public List<AnimalInfo> getDietsAnimal() {
+        return dietService.getDietsAnimal();
     }
 
     @GetMapping(value = "/diets/diet")

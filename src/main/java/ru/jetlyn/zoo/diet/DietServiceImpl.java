@@ -1,17 +1,21 @@
-package ru.jetlyn.zoo.services.impl;
+package ru.jetlyn.zoo.diet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.data.DietRepository;
-import ru.jetlyn.zoo.entity.Diet;
-import ru.jetlyn.zoo.entity.DietId;
+import ru.jetlyn.zoo.diet.DietRepository;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.diet.DietId;
+import ru.jetlyn.zoo.animal.dto.AnimalFoodNorm;
+import ru.jetlyn.zoo.animal.dto.AnimalInfo;
+import ru.jetlyn.zoo.animal.dto.AnimalMapper;
 import ru.jetlyn.zoo.exception.DataNotFound;
-import ru.jetlyn.zoo.services.DietService;
+import ru.jetlyn.zoo.diet.DietService;
 
-import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис по работе с методами для сущностей Diet
@@ -41,6 +45,24 @@ public class DietServiceImpl implements DietService {
     @Override
     public List<Diet> getAllDiet() {
         return dietRepository.findAll();
+    }
+
+    @Override
+    public List<AnimalInfo> getDietsAnimal() {
+        List<Diet> dietList = dietRepository.findAll();
+        List<AnimalInfo> animalInfoList = new ArrayList<>();
+        for (Diet diet : dietList) {
+            AnimalInfo animalInfo = new AnimalInfo(diet.getAnimal().getName(), diet.getAnimal().getSpecies());
+           if (!animalInfoList.contains(animalInfo)) {
+               List<AnimalFoodNorm> animalFoodNormList = dietList.stream()
+                       .filter(x -> x.getAnimal().getName().equals(animalInfo.getName()))
+                       .map(AnimalMapper::toAnimalFoodNorm).collect(Collectors.toList());
+               animalInfo.setDietList(animalFoodNormList);
+               animalInfoList.add(animalInfo);
+           }
+        }
+
+        return animalInfoList;
     }
 
     @Override

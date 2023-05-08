@@ -1,6 +1,6 @@
-package ru.jetlyn.zoo.services;
+package ru.jetlyn.zoo.food;
 
-import ru.jetlyn.zoo.entity.Food;
+import ru.jetlyn.zoo.food.Food;
 
 import java.util.List;
 

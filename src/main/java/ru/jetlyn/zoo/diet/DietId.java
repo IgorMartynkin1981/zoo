@@ -1,4 +1,4 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.diet;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;

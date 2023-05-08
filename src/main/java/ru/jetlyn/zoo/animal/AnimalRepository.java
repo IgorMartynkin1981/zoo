@@ -1,8 +1,7 @@
-package ru.jetlyn.zoo.data;
+package ru.jetlyn.zoo.animal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.jetlyn.zoo.entity.Animal;
 
 /**
  * Хранилище сущностей Animal

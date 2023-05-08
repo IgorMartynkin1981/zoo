@@ -1,12 +1,14 @@
 package ru.jetlyn.zoo.services;
 
 import org.junit.jupiter.api.Test;
-import ru.jetlyn.zoo.entity.*;
-import ru.jetlyn.zoo.entity.enums.Measure;
-import ru.jetlyn.zoo.entity.enums.Species;
-import ru.jetlyn.zoo.entity.enums.TypeOfProduct;
-import ru.jetlyn.zoo.services.impl.AnimalServiceImpl;
-import ru.jetlyn.zoo.services.impl.FoodServiceImpl;
+import ru.jetlyn.zoo.animal.Animal;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.enums.Measure;
+import ru.jetlyn.zoo.enums.Species;
+import ru.jetlyn.zoo.enums.TypeOfProduct;
+import ru.jetlyn.zoo.animal.AnimalServiceImpl;
+import ru.jetlyn.zoo.food.Food;
+import ru.jetlyn.zoo.food.FoodServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,7 @@ class AnimalServiceImplTest {
         List<Diet> dietList = new ArrayList<>();
         dietList.add(diet1);
         dietList.add(diet2);
-        animal1.setRatings(dietList);
+        
         animalService.saveAnimal(animal1);
 
         System.out.println(animalService.getAllAnimals());

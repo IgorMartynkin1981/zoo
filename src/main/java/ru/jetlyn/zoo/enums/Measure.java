@@ -1,4 +1,4 @@
-package ru.jetlyn.zoo.entity.enums;
+package ru.jetlyn.zoo.enums;
 
 /**
  * Measure Единица измерения(кг/шт/л)

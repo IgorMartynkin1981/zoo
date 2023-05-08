@@ -1,11 +1,11 @@
-package ru.jetlyn.zoo.services.impl;
+package ru.jetlyn.zoo.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.data.AnimalRepository;
-import ru.jetlyn.zoo.entity.Animal;
+import ru.jetlyn.zoo.animal.AnimalRepository;
+import ru.jetlyn.zoo.animal.Animal;
 import ru.jetlyn.zoo.exception.DataNotFound;
-import ru.jetlyn.zoo.services.AnimalService;
+import ru.jetlyn.zoo.animal.AnimalService;
 
 import javax.validation.Valid;
 import java.util.List;

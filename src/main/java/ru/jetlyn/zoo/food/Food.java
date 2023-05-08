@@ -1,28 +1,29 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.food;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.internal.IgnoreForbiddenApisErrors;
-import ru.jetlyn.zoo.entity.enums.Species;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.enums.Measure;
+import ru.jetlyn.zoo.enums.TypeOfProduct;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
- * Сущность Животное
+ * Сущность Продукты
  * Состоит из полей:
- * @id
  * @name Название,
- * @species Вид (млекопитающее/птица)
- * @predator Признак хищника (да/нет). По умолчанию НЕТ
+ * @amount Текущее количество,
+ * @measure Единица измерения(кг/шт/л),
+ * @typeOfProduct Тип (овощ/фрукт/мясо/жидкость).
  */
 
 @Data
 @Entity
-@Table(name = "animal")
-public class Animal {
+@Table(name = "food")
+public class Food {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,15 +32,19 @@ public class Animal {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column
+    private double amound;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Species species;
+    private Measure measure;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean predator;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_of_product", nullable = false)
+    private TypeOfProduct typeOfProduct;
 
     @Transient
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Diet> dietList;
