@@ -1,16 +1,19 @@
 package ru.jetlyn.zoo.diet;
 
-import ru.jetlyn.zoo.diet.Diet;
-import ru.jetlyn.zoo.diet.DietId;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
+import ru.jetlyn.zoo.enums.Species;
+import ru.jetlyn.zoo.enums.TypeOfProduct;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface DietService {
 
     List<Diet> getAllDiet();
 
-    List<AnimalInfo> getDietsAnimal();
+    Collection<AnimalInfo> getAllDietsAnimal(Species species, String predator,
+                                             TypeOfProduct typeOfProduct, String name,
+                                             Integer from, Integer size);
 
     Diet getDietBy(DietId dietId);
 
