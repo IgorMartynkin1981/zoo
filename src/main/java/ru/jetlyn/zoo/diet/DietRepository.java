@@ -13,10 +13,6 @@ import java.util.List;
 @Repository
 public interface DietRepository extends JpaRepository<Diet, DietId> {
 
-    List<Diet> findDietsByAnimal_Id(long animalId);
-
-    List<Diet> findDietByFood_Id(long foodId);
-
     List<Diet> findDietByAnimal_Species(Species species, Pageable pageRequest);
 
     List<Diet> findDietByAnimal_Predator(boolean predator, Pageable pageRequest);

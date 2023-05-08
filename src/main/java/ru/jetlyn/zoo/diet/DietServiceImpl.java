@@ -5,12 +5,14 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Service;
+import ru.jetlyn.zoo.animal.Animal;
 import ru.jetlyn.zoo.animal.dto.AnimalFoodNorm;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 import ru.jetlyn.zoo.animal.dto.AnimalMapper;
 import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
 import ru.jetlyn.zoo.exception.DataNotFound;
+import ru.jetlyn.zoo.food.Food;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,6 +46,11 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
+    public Collection<Diet> getAll() {
+        return dietRepository.findAll();
+    }
+
+    @Override
     public Collection<AnimalInfo> getAllDietsAnimal(Species species, String predator,
                                                     TypeOfProduct typeOfProduct, String name,
                                                     Integer from, Integer size) {
@@ -66,29 +73,19 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<Diet> getAllDiet() {
-        return dietRepository.findAll();
-    }
-
-    @Override
-    public Diet getDietBy(DietId dietId) {
+    public Diet getDietById(DietId dietId) {
         return dietRepository.findById(dietId)
                 .orElseThrow(() -> new DataNotFound("Diet with id %d was not found in the database"));
     }
 
-    @Override
-    public List<Diet> getDietAnimalById(long animalId) {
-        return dietRepository.findDietsByAnimal_Id(animalId);
-    }
-
-    @Override
-    public List<Diet> getDietFoodById(long foodId) {
-        return dietRepository.findDietByFood_Id(foodId);
-    }
-
-    @Override
+   @Override
     public Diet saveDietAnimal(Diet diet) {
         return dietRepository.save(diet);
+    }
+
+    @Override
+    public Collection<AnimalInfo> saveDietsAnimal(Animal animal, List<Food> foodList, double amount) {
+        return null;
     }
 
     @Override
@@ -99,22 +96,6 @@ public class DietServiceImpl implements DietService {
         upDiet.setAmount(diet.getAmount());
 
         return dietRepository.save(upDiet);
-    }
-
-    @Override
-    public void deleteAnimal(long animalId) {
-
-    }
-
-    @Override
-    public void deleteFood(long foodId) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-        ResourceDatabasePopulator d = new ResourceDatabasePopulator();
-        d.addScript(new ClassPathResource("scriptForDB.sql"));
     }
 
     public Collection<AnimalInfo> getDietsAnimal(Collection<Diet> dietList) {

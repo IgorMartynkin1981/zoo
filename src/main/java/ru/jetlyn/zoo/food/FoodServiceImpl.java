@@ -47,6 +47,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food updateFood(@Valid Food food) {
+        getFood(food.getId());
         return foodRepository.save(food);
     }
 

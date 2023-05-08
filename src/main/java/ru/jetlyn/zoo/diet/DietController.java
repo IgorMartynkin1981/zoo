@@ -20,12 +20,17 @@ public class DietController {
         this.dietService = dietService;
     }
 
+    @GetMapping(value = "/diets")
+    public Collection<Diet> getAll() {
+        return dietService.getAll();
+    }
+
     @GetMapping(value = "/diets/all")
     @ResponseBody
     public Collection<AnimalInfo> getAll(@RequestParam(name = "species", required = false) Species species,
                                          @RequestParam(name = "predator", required = false) String predator,
                                          @RequestParam(name = "typeOfProduct", required = false)
-                                             TypeOfProduct typeOfProduct,
+                                         TypeOfProduct typeOfProduct,
                                          @RequestParam(name = "name", required = false) String name,
                                          @RequestParam(name = "from", defaultValue = "0") Integer from,
                                          @RequestParam(name = "size", defaultValue = "20") Integer size) {
@@ -33,23 +38,9 @@ public class DietController {
         return dietService.getAllDietsAnimal(species, predator, typeOfProduct, name, from, size);
     }
 
-    @GetMapping(value = "/diets")
-    public List<Diet> getAllDiets() {
-        return dietService.getAllDiet();
-    }
-
     @GetMapping(value = "/diets/diet")
-    public Diet getDietBy(@RequestBody DietId dietId) {
-        return dietService.getDietBy(dietId);
+    public Diet getDietById(@RequestBody DietId dietId) {
+        return dietService.getDietById(dietId);
     }
 
-    @GetMapping(value = "/diets/animal/{animalId}")
-    public List<Diet> getDietAnimal(@PathVariable long animalId) {
-        return dietService.getDietAnimalById(animalId);
-    }
-
-    @GetMapping(value = "/diets/food/{foodId}")
-    public List<Diet> getDietFood(@PathVariable long foodId) {
-        return dietService.getDietFoodById(foodId);
-    }
 }
