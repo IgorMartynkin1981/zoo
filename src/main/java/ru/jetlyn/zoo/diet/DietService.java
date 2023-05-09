@@ -17,11 +17,11 @@ public interface DietService {
                                              TypeOfProduct typeOfProduct, String name,
                                              Integer from, Integer size);
 
-    Diet getDietById(DietId dietId);
+    Diet getDietById(long animalId, long foodId);
 
-    Diet saveDietAnimal(Diet diet);
+    Diet saveDietAnimal(long animalId, long foodId, long amount);
 
-    Diet updateDietAnimal(Diet diet);
+    Diet updateDietAnimal(long animalId, long foodId, long amount);
 
     Collection<AnimalInfo> saveDietsAnimal(Animal animal, List<Food> foodList, double amount);
 

@@ -1,18 +1,17 @@
 package ru.jetlyn.zoo.diet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Service;
 import ru.jetlyn.zoo.animal.Animal;
+import ru.jetlyn.zoo.animal.AnimalService;
 import ru.jetlyn.zoo.animal.dto.AnimalFoodNorm;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 import ru.jetlyn.zoo.animal.dto.AnimalMapper;
 import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
-import ru.jetlyn.zoo.exception.DataNotFound;
 import ru.jetlyn.zoo.food.Food;
+import ru.jetlyn.zoo.food.FoodService;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -39,10 +38,14 @@ import java.util.stream.Collectors;
 public class DietServiceImpl implements DietService {
 
     private final DietRepository dietRepository;
+    private final AnimalService animalService;
+    private final FoodService foodService;
 
     @Autowired
-    public DietServiceImpl(DietRepository dietRepository) {
+    public DietServiceImpl(DietRepository dietRepository, AnimalService animalService, FoodService foodService) {
         this.dietRepository = dietRepository;
+        this.animalService = animalService;
+        this.foodService = foodService;
     }
 
     @Override
@@ -73,13 +76,18 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public Diet getDietById(DietId dietId) {
-        return dietRepository.findById(dietId)
-                .orElseThrow(() -> new DataNotFound("Diet with id %d was not found in the database"));
+    public Diet getDietById(long animalId, long foodId) {
+        return dietRepository.findDietByAnimal_IdAndFood_Id(animalId, foodId);
     }
 
    @Override
-    public Diet saveDietAnimal(Diet diet) {
+    public Diet saveDietAnimal(long animalId, long foodId, long amount) {
+        Diet diet = new Diet();
+        diet.setDietId(new DietId(animalId, foodId));
+        diet.setAnimal(animalService.getAnimal(animalId));
+        diet.setFood(foodService.getFood(foodId));
+        diet.setAmount(amount);
+
         return dietRepository.save(diet);
     }
 
@@ -89,13 +97,12 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public Diet updateDietAnimal(Diet diet) {
-        Diet upDiet = dietRepository.findById(diet.getDietId())
-                .orElseThrow(() -> new DataNotFound("Diet with id %d was not found in the database"));
+    public Diet updateDietAnimal(long animalId, long foodId, long amount) {
+        Diet diet = getDietById(animalId, foodId);
 
-        upDiet.setAmount(diet.getAmount());
+        diet.setAmount(amount);
 
-        return dietRepository.save(upDiet);
+        return dietRepository.save(diet);
     }
 
     public Collection<AnimalInfo> getDietsAnimal(Collection<Diet> dietList) {

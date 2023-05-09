@@ -7,7 +7,6 @@ import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/zoo")
@@ -38,9 +37,19 @@ public class DietController {
         return dietService.getAllDietsAnimal(species, predator, typeOfProduct, name, from, size);
     }
 
-    @GetMapping(value = "/diets/diet")
-    public Diet getDietById(@RequestBody DietId dietId) {
-        return dietService.getDietById(dietId);
+    @GetMapping(value = "/diets/diet/{animalId}/{foodId}")
+    public Diet getDietById(@PathVariable long animalId, @PathVariable long foodId) {
+        return dietService.getDietById(animalId, foodId);
+    }
+
+    @PostMapping(value = "/diets/diet/{animalId}/{foodId}/{amount}")
+    public Diet saveDiet(@PathVariable long animalId, @PathVariable long foodId, @PathVariable long amount) {
+        return dietService.saveDietAnimal(animalId, foodId, amount);
+    }
+
+    @PutMapping(value = "/diets/diet/{animalId}/{foodId}/{amount}")
+    public Diet updateDietById(@PathVariable long animalId, @PathVariable long foodId, @PathVariable long amount) {
+        return dietService.updateDietAnimal(animalId, foodId, amount);
     }
 
 }
