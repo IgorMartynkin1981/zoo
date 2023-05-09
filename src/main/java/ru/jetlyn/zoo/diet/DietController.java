@@ -10,6 +10,21 @@ import ru.jetlyn.zoo.food.dto.FoodDietInfo;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Контроллер по работе с методами для сущностей Diet
+ *
+ * @getAll() - получить меню животных. GET:{{baseUrl}}/zoo/diets
+ * @getAllDietsAnimal - Получить информацию о животных, с перечислением продуктов их питания.
+ * GET:{{baseUrl}}/zoo/diets/all?name=Т
+ * @getDietById - получить ежедневную норму для животного по его id.
+ * GET:{{baseUrl}}/zoo/diets/diet/:animalId/:foodid
+ * @saveDietAnimal - Назначение продукта животному. POST:{{baseUrl}}/zoo/diets/diet/:animalId/:foodid/:amound
+ * @updateDietAnimal - Изменение ежедневной нормы для животного по его id.
+ * PUT:{{baseUrl}}/zoo/diets/diet/:animalId/:foodid/:amound
+ * @informationDiet - Получить информацию о питании животных на 7 дней от заданной даты.
+ * GET:{{baseUrl}}/zoo/diets/info?periodStart=2023-05-20
+ */
+
 @RestController
 @RequestMapping(path = "/zoo")
 public class DietController {
