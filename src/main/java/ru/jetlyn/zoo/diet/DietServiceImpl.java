@@ -10,27 +10,19 @@ import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 import ru.jetlyn.zoo.animal.dto.AnimalMapper;
 import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
+import ru.jetlyn.zoo.exception.ValidationDataException;
 import ru.jetlyn.zoo.food.Food;
 import ru.jetlyn.zoo.food.FoodService;
+import ru.jetlyn.zoo.food.dto.FoodDietInfo;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Сервис по работе с методами для сущностей Diet
- *
- * @getAllDiet - получить все рационы питания
- * @getDietBy - получить рационы питания по его Id
- * @getDietAnimalById - получить рационы питания животного
- * @getDietFoodById - получить животных питающихся продуктом
- * @saveDietAnimal - создать/сохранить рацион питания животного
- * @updateAnimal - обновить данные животного
- * @deleteAnimalById - удалить животное по его Id
- * @deleteAnimalByIds - удалить список животных по их Id
- * @deleteAllAnimal - удалить всех животных из хранилища
  */
 
 
@@ -80,7 +72,7 @@ public class DietServiceImpl implements DietService {
         return dietRepository.findDietByAnimal_IdAndFood_Id(animalId, foodId);
     }
 
-   @Override
+    @Override
     public Diet saveDietAnimal(long animalId, long foodId, long amount) {
         Diet diet = new Diet();
         diet.setDietId(new DietId(animalId, foodId));
@@ -103,6 +95,54 @@ public class DietServiceImpl implements DietService {
         diet.setAmount(amount);
 
         return dietRepository.save(diet);
+    }
+
+    /**
+     * @param periodStartString Если заданная дана больше текущей, то возвращаем
+     *                          необходимое количество продуктов на 7 дней,
+     *                          а нехватку продуктов высчитывае как:
+     *                          остаток продуктов на складе - необходимое количество продуктов на 7 дней
+     *                          и - необходимое количество продуктов на разницу дней текущей даты и заданной
+     * @return List<FoodDietInfo>
+     */
+    @Override
+    public List<FoodDietInfo> informationDiet(String periodStartString) {
+        long dietForDays = 7;
+        LocalDate periodStart = LocalDate.now();
+
+        if (periodStartString != null)
+            periodStart = LocalDate.parse(periodStartString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        if (periodStart.isBefore(LocalDate.now()))
+            throw new ValidationDataException("Заданная дата не может быть меньше текущей");
+
+        dietForDays += Math.abs(ChronoUnit.DAYS.between(LocalDate.now(), periodStart));
+
+        Map<Food, Double> mapDietFoodForDays = new HashMap<>();
+        List<Diet> dietList = dietRepository.findAll();
+
+        for (Diet diet : dietList) {
+            if (mapDietFoodForDays.containsKey(diet.getFood())) {
+                mapDietFoodForDays.put(diet.getFood(),
+                        mapDietFoodForDays.get(diet.getFood()) + diet.getAmount());
+            } else {
+                mapDietFoodForDays.put(diet.getFood(), diet.getAmount());
+            }
+        }
+
+        List<FoodDietInfo> foodDietInfos = new ArrayList<>();
+
+        for (Map.Entry<Food, Double> entry : mapDietFoodForDays.entrySet()) {
+            FoodDietInfo foodDietInfo = new FoodDietInfo((entry.getKey().getName()),
+                    (entry.getValue() * 7),
+                    (entry.getKey().getAmound()));
+            if ((entry.getValue() * dietForDays) > entry.getKey().getAmound()) {
+                foodDietInfo.setDeficitFood((entry.getValue() * dietForDays) - entry.getKey().getAmound());
+            }
+            foodDietInfos.add(foodDietInfo);
+        }
+
+        return foodDietInfos;
     }
 
     public Collection<AnimalInfo> getDietsAnimal(Collection<Diet> dietList) {

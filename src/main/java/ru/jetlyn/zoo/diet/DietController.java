@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
 import ru.jetlyn.zoo.enums.Species;
 import ru.jetlyn.zoo.enums.TypeOfProduct;
+import ru.jetlyn.zoo.food.dto.FoodDietInfo;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/zoo")
@@ -50,6 +52,11 @@ public class DietController {
     @PutMapping(value = "/diets/diet/{animalId}/{foodId}/{amount}")
     public Diet updateDietById(@PathVariable long animalId, @PathVariable long foodId, @PathVariable long amount) {
         return dietService.updateDietAnimal(animalId, foodId, amount);
+    }
+
+    @GetMapping(value = "/diets/info")
+    public List<FoodDietInfo> informationDiet(@RequestParam(name = "periodStart", required = false) String periodStart) {
+        return dietService.informationDiet(periodStart);
     }
 
 }
