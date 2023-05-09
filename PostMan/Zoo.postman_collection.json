@@ -874,7 +874,54 @@
 					"name": "Get All Diets",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/zoo/diets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zoo",
+								"diets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "add DB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/zoo/admin/start",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"zoo",
+								"admin",
+								"start"
+							]
+						}
 					},
 					"response": []
 				}
