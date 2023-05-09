@@ -7,6 +7,10 @@ import ru.jetlyn.zoo.enums.Species;
 
 import java.util.List;
 
+/**
+ * Класс для вывода данных согласно ТЗ
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

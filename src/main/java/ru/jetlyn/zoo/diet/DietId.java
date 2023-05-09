@@ -1,6 +1,9 @@
 package ru.jetlyn.zoo.diet;
 
+import lombok.Data;
+
 import javax.persistence.Embeddable;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
 import java.util.Objects;

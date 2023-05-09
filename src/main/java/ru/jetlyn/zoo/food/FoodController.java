@@ -7,6 +7,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Контроллер для сущности Food
+ *
+ * @getAllFoods - получить все продукты GET:{{baseUrl}}/zoo/foods
+ * @getFood - получить продукт по его Id
+ * @saveFood - создать/сохранить продукт POST:{{baseUrl}}/zoo/foods @RequestBody в формате JSON
+ * @updateFood - обновить данные продукта по его Id PUT:{{baseUrl}}/zoo/foods @RequestBody в формате JSON
+ * @deleteFoodById - удалить продукт по его Id DELETE:{{baseUrl}}/zoo/foods/:id
+ * @deleteFoodByIds - удалить список продуктов по их Id DELETE:{{baseUrl}}/zoo/foods/group/:Ids
+ * @deleteAllFood - удалить все продукты из хранилища DELETE:{{baseUrl}}/zoo/foods
+ */
+
 @RestController
 @RequestMapping(path = "/zoo")
 public class FoodController {
@@ -44,9 +56,9 @@ public class FoodController {
         return new ResponseEntity<>(String.format("Food with ID: %s was deleted!", id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/foods/group")
-    public ResponseEntity<String> deleteAnimalByIds(@RequestBody List<Long> foodIds) {
-        foodService.deleteFoodByIds(foodIds);
+    @DeleteMapping("/foods/group/{ids}")
+    public ResponseEntity<String> deleteAnimalByIds(@PathVariable List<Long> ids) {
+        foodService.deleteFoodByIds(ids);
         return new ResponseEntity<>("Foods was deleted!", HttpStatus.OK);
     }
 

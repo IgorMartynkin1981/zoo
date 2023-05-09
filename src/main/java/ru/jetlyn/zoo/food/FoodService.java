@@ -1,7 +1,5 @@
 package ru.jetlyn.zoo.food;
 
-import ru.jetlyn.zoo.food.Food;
-
 import java.util.List;
 
 /**
