@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Морковь",
+        "amound": 10.0,
+        "measure": "pcs",
+        "typeOfProduct": "VEGETABLE"
+    },
+    {
+        "name": "Мясо",
+        "amound": 54.0,
+        "measure": "kg",
+        "typeOfProduct": "MEAT"
+    },
+    {
+        "name": "Капуста",
+        "amound": 32.0,
+        "measure": "pcs",
+        "typeOfProduct": "VEGETABLE"
+    },
+    {
+        "name": "Банан",
+        "amound": 186.0,
+        "measure": "pcs",
+        "typeOfProduct": "FRUIT"
+    },
+    {
+        "name": "Яблоко",
+        "amound": 0.0,
+        "measure": "pcs",
+        "typeOfProduct": "FRUIT"
+    },
+    {
+        "name": "Зерно",
+        "amound": 24000.0,
+        "measure": "kg",
+        "typeOfProduct": "VEGETABLE"
+    },
+    {
+        "name": "Вода",
+        "amound": 1000.0,
+        "measure": "l",
+        "typeOfProduct": "LIQUID"
+    }
+]
