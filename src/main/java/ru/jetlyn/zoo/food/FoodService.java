@@ -22,7 +22,7 @@ public interface FoodService {
 
     Food saveFood(Food food);
 
-    Food updateFood(Food food);
+    Food updateFood(long id, double amound);
 
     void deleteFoodById(long id);
 

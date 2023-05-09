@@ -45,9 +45,10 @@ public class FoodController {
         return foodService.saveFood(food);
     }
 
-    @PutMapping(value = "/foods")
-    public Food updateAnimal(@RequestBody Food food) {
-        return foodService.updateFood(food);
+    @PutMapping(value = "/foods/{foodId}/{amount}")
+    public Food updateAnimal(@RequestBody long foodId,
+                             @RequestBody double amount) {
+        return foodService.updateFood(foodId, amount);
     }
 
     @DeleteMapping("/foods/{id}")
