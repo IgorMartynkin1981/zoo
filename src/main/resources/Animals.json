@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Обезьяна",
+        "species": "MAMMAL",
+        "predator": false
+    },
+    {
+        "name": "Заяц",
+        "species": "MAMMAL",
+        "predator": false
+    },
+    {
+        "name": "Орёл",
+        "species": "BIRD",
+        "predator": true
+    },
+    {
+        "name": "Тигр",
+        "species": "MAMMAL",
+        "predator": true
+    },
+    {
+        "name": "Лошадь",
+        "species": "MAMMAL",
+        "predator": false
+    }
+]

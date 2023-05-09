@@ -1,8 +1,15 @@
-package ru.jetlyn.zoo.entity;
+package ru.jetlyn.zoo.food;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import ru.jetlyn.zoo.diet.Diet;
+import ru.jetlyn.zoo.enums.Measure;
+import ru.jetlyn.zoo.enums.TypeOfProduct;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Сущность Продукты
@@ -35,4 +42,10 @@ public class Food {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_product", nullable = false)
     private TypeOfProduct typeOfProduct;
+
+    @Transient
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Diet> dietList;
 }
