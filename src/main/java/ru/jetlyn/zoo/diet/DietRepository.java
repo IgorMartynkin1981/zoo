@@ -24,4 +24,5 @@ public interface DietRepository extends JpaRepository<Diet, DietId> {
     List<Diet> findDietByAnimal_Like(String name);
 
     Diet findDietByAnimal_IdAndFood_Id(long animalId, long foodId);
+
 }
