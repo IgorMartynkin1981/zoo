@@ -2,10 +2,9 @@ package ru.jetlyn.zoo.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import ru.jetlyn.zoo.exception.DataNotFound;
 
-
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -42,12 +41,12 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food saveFood(@Validated Food food) {
+    public Food saveFood(@Valid Food food) {
         return foodRepository.save(food);
     }
 
     @Override
-    public Food updateFood(@Validated Food food) {
+    public Food updateFood(@Valid Food food) {
         getFood(food.getId());
         return foodRepository.save(food);
     }
