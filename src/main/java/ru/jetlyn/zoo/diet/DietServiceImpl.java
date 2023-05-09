@@ -3,7 +3,6 @@ package ru.jetlyn.zoo.diet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.jetlyn.zoo.animal.Animal;
 import ru.jetlyn.zoo.animal.AnimalService;
 import ru.jetlyn.zoo.animal.dto.AnimalFoodNorm;
 import ru.jetlyn.zoo.animal.dto.AnimalInfo;
@@ -81,11 +80,6 @@ public class DietServiceImpl implements DietService {
         diet.setAmount(amount);
 
         return dietRepository.save(diet);
-    }
-
-    @Override
-    public Collection<AnimalInfo> saveDietsAnimal(Animal animal, List<Food> foodList, double amount) {
-        return null;
     }
 
     @Override
