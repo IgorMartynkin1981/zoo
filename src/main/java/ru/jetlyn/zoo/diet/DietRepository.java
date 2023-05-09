@@ -23,4 +23,5 @@ public interface DietRepository extends JpaRepository<Diet, DietId> {
     @Query(value = "SELECT b FROM Diet AS b WHERE b.animal.name LIKE ?1%")
     List<Diet> findDietByAnimal_Like(String name);
 
+    Diet findDietByAnimal_IdAndFood_Id(long animalId, long foodId);
 }
